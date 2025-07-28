@@ -14,7 +14,7 @@ namespace Renova.Domain.Model
         [JsonIgnore]
         public ICollection<TelefoneModel> Telefones { get; set; }
         [JsonIgnore]
-        public LojaModel Loja { get; set; }
+        public ICollection<LojaModel> Lojas { get; set; }
         [JsonIgnore]
         public ICollection<ClienteModel> Clientes { get; set; }
     }

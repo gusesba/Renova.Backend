@@ -17,7 +17,7 @@ namespace Renova.Service.Handlers.Usuario
 
         public async Task<UsuarioModel> Handle(GetUsuarioByEmailQuery request, CancellationToken cancellationToken)
         {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(u=>u.Email == request.Email);
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(u=>u.Email == request.Email,cancellationToken);
 
             return usuario;
         }

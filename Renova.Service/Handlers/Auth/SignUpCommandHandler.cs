@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Renova.Service.Commands.Auth;
 using Renova.Service.Queries.Auth;
+using System.ComponentModel.DataAnnotations;
 
 namespace Renova.Service.Handlers.Auth
 {
@@ -21,10 +22,10 @@ namespace Renova.Service.Handlers.Auth
         public async Task<LoginDto> Handle(SignUpCommand request, CancellationToken cancellationToken)
         {
             var usuarioExistente = await _context.Usuario
-                .FirstOrDefaultAsync(u => u.Email == request.Email);
+                .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
             if (usuarioExistente != null)
-                throw new Exception("Email já cadastrado.");
+                throw new ValidationException("Email já cadastrado.");
 
             string senhaHash = BCrypt.Net.BCrypt.HashPassword(request.Senha);
 
@@ -35,8 +36,8 @@ namespace Renova.Service.Handlers.Auth
                 Nome = request.Nome
             };
 
-            await _context.Usuario.AddAsync(novoUsuario);
-            await _context.SaveChangesAsync();
+            await _context.Usuario.AddAsync(novoUsuario,cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
 
             return await _mediator.Send(new LoginQuery()
             {

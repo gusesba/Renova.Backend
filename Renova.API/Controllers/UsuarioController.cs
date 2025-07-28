@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model.Dto;
 using Renova.Service.Commands.Auth;
 using Renova.Service.Queries.Auth;
+using System.ComponentModel.DataAnnotations;
 
 namespace Renova.API.Controllers
 {
@@ -20,11 +21,18 @@ namespace Renova.API.Controllers
         [ProducesResponseType(typeof(LoginDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Login([FromBody] LoginQuery request)
         {
-            var token = await _mediator.Send(request);
-            if (token == null)
-                return Unauthorized();
+            try
+            {
+                var token = await _mediator.Send(request);
+                if (token == null)
+                    return Unauthorized();
 
-            return Ok(token);
+                return Ok(token);
+            } 
+            catch (Exception e)
+            {
+                return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
+            }
         }
 
         [HttpPost("registrar")]
@@ -32,9 +40,19 @@ namespace Renova.API.Controllers
 
         public async Task<IActionResult> Registrar([FromBody] SignUpCommand command)
         {
-            var token = await _mediator.Send(command);
-
-            return Ok(token);
+            try
+            {
+                var token = await _mediator.Send(command);
+                return Ok(token);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
+            }
         }
     }
 }

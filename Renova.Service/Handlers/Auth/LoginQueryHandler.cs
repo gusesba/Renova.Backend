@@ -24,7 +24,7 @@ namespace Renova.Service.Handlers.Auth
 
         public async Task<LoginDto> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(u=>u.Email == request.Email);
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(u=>u.Email == request.Email,cancellationToken);
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Senha, usuario.SenhaHash))
                 return null;
 

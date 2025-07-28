@@ -44,9 +44,9 @@ namespace Renova.Persistence
                       .HasForeignKey(p => p.UsuarioId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(p => p.Loja)
+                entity.HasMany(p => p.Lojas)
                         .WithOne(p => p.Usuario)
-                        .HasForeignKey<LojaModel>(p => p.UsuarioId)
+                        .HasForeignKey(p => p.UsuarioId)
                         .OnDelete(DeleteBehavior.NoAction);
             });
 
@@ -104,8 +104,8 @@ namespace Renova.Persistence
                 entity.Property(p => p.UsuarioId).IsRequired();
 
                 entity.HasOne(p => p.Usuario)
-                      .WithOne(p => p.Loja)
-                      .HasForeignKey<LojaModel>(p => p.UsuarioId)
+                      .WithMany(p => p.Lojas)
+                      .HasForeignKey(p => p.UsuarioId)
                       .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasMany(p => p.Clientes)

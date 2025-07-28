@@ -8,6 +8,7 @@ namespace Renova.Domain.Model
         public string Nome { get; set; }
 
         public Guid UsuarioId { get; set; }
+
         public UsuarioModel Usuario { get; set; }
 
         // Relacionamentos
