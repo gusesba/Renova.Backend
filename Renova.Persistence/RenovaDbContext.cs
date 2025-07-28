@@ -57,7 +57,7 @@ namespace Renova.Persistence
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
                 entity.Property(p => p.Referencia).IsRequired();
-                entity.Property(p => p.Nome).HasMaxLength(100).IsRequired();
+                entity.Property(p => p.Apelido).HasMaxLength(100).IsRequired();
                 entity.Property(p => p.UsuarioId).IsRequired();
 
                 entity.HasOne(p => p.Usuario)

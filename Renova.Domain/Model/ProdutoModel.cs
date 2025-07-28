@@ -1,4 +1,6 @@
-﻿namespace Renova.Domain.Model
+﻿using System.Text.Json.Serialization;
+
+namespace Renova.Domain.Model
 {
     public class ProdutoModel
     {
@@ -23,10 +25,11 @@
 
         public Guid TipoId { get; set; }
         public TipoProdutoModel Tipo { get; set; }
-
+        [JsonIgnore]
         public Guid LojaId { get; set; }
+        [JsonIgnore]
         public LojaModel Loja { get; set; }
-
+        [JsonIgnore]
         public ICollection<ProdutoMovimentacaoModel> Movimentacoes { get; set; }
     }
 

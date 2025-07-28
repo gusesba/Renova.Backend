@@ -27,7 +27,11 @@ namespace Renova.Service.Handlers.Auth
             if (usuarioExistente != null)
                 throw new ValidationException("Email já cadastrado.");
 
-            string senhaHash = BCrypt.Net.BCrypt.HashPassword(request.Senha);
+            string senhaHash = "";
+            if(request.Senha != "")
+            {
+                senhaHash = BCrypt.Net.BCrypt.HashPassword(request.Senha);
+            }
 
             var novoUsuario = new UsuarioModel()
             {

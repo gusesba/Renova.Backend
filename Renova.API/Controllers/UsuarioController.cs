@@ -40,6 +40,10 @@ namespace Renova.API.Controllers
 
         public async Task<IActionResult> Registrar([FromBody] SignUpCommand command)
         {
+            if(command.Senha == "")
+            {
+                return BadRequest("Senha não pode ser vazia");
+            }    
             try
             {
                 var token = await _mediator.Send(command);
