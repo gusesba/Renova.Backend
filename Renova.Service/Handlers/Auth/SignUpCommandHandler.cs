@@ -43,6 +43,9 @@ namespace Renova.Service.Handlers.Auth
             await _context.Usuario.AddAsync(novoUsuario,cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
+            if (request.Senha == "")
+                return null;
+
             return await _mediator.Send(new LoginQuery()
             {
                 Email = request.Email,

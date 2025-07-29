@@ -4,6 +4,10 @@ using MediatR;
 using Renova.Service.Commands.Cliente;
 using Renova.Service.Commands.Auth;
 using Renova.Service.Queries.Usuario;
+using System.ComponentModel.DataAnnotations;
+using Renova.Service.Queries.Cliente;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Renova.Service.Handlers.Cliente
 {
@@ -19,7 +23,7 @@ namespace Renova.Service.Handlers.Cliente
 
         public async Task<ClienteModel> Handle(CriarClienteCommand request, CancellationToken cancellationToken)
         {
-            if(request.UsuarioId == null)
+            if (request.UsuarioId == null)
             {
                 var usuario = await _mediator.Send(new GetUsuarioByEmailQuery() { Email = request.Email });
                 if (usuario == null)
@@ -30,16 +34,28 @@ namespace Renova.Service.Handlers.Cliente
                 request.UsuarioId = usuario.Id;
             }
 
-            var cliente = _mediator.Send(new GetClienteByUsuarioId() { UsuarioId = request.UsuarioId });
+            var cliente = await _mediator.Send(new GetClienteByUsuarioIdQuery() { UsuarioId = request.UsuarioId, LojaId = request.LojaId });
 
-            if(cliente != null)
+            if (cliente != null)
             {
-                throw new E
+                throw new ValidationException("Esse usuário já é um cliente");
             }
 
-            var createdCliente = await _context.Cliente.AddAsync(, cancellationToken);
+            var proximaReferencia = await _context.Cliente
+                .Where(c => c.LojaId == request.LojaId)
+                .MaxAsync(c => (int?)c.Referencia,cancellationToken) ?? 0;
+
+            cliente = new()
+            {
+                LojaId = request.LojaId,
+                Apelido = request.Apelido,
+                UsuarioId = request.UsuarioId,
+                Referencia = proximaReferencia + 1
+            };
+
+            var createdCliente = await _context.Cliente.AddAsync(cliente, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-            return createdLoja.Entity;
+            return createdCliente.Entity;
         }
     }
 }

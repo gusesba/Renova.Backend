@@ -23,7 +23,7 @@ namespace Renova.API.Controllers
 
                 var loja = await _mediator.Send(command);
 
-                return Ok(loja);
+                return Created($"api/loja/{loja.Id}",loja);
             }
             catch (Exception e)
             {

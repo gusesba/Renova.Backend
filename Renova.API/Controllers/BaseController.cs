@@ -4,6 +4,9 @@ using Renova.Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Renova.Service.Queries.Usuario;
+using Renova.Service.Config;
+using Renova.Service.Queries.Loja;
+using Microsoft.OpenApi.Any;
 
 namespace Renova.API.Controllers
 {
@@ -23,6 +26,17 @@ namespace Renova.API.Controllers
             var usuario = await _mediator.Send(new GetUsuarioByEmailQuery() { Email = email });
 
             return usuario;
+        }
+
+        protected async Task<bool> IsLojaFromUser<TResponse>(BaseRequest<TResponse> request)
+        {
+            var loja = await _mediator.Send(new GetLojaByIdQuery() { Id = request.LojaId });
+            var usuario = await GetUsuarioByToken();
+
+            if (loja == null || usuario == null || loja.UsuarioId != usuario.Id)
+                return false;
+
+            return true;
         }
     }
 }
