@@ -28,15 +28,13 @@ namespace Renova.API.Controllers
             return usuario;
         }
 
-        protected async Task<bool> IsLojaFromUser<TResponse>(BaseRequest<TResponse> request)
+        protected async Task IsLojaFromUser<TResponse>(BaseRequest<TResponse> request)
         {
             var loja = await _mediator.Send(new GetLojaByIdQuery() { Id = request.LojaId });
             var usuario = await GetUsuarioByToken();
 
             if (loja == null || usuario == null || loja.UsuarioId != usuario.Id)
-                return false;
-
-            return true;
+                throw new UnauthorizedAccessException();
         }
     }
 }

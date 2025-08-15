@@ -7,7 +7,7 @@ namespace Renova.Domain.Model
         public Guid Id { get; set; }
         public string Valor { get; set; }
         [JsonIgnore]
-        public Guid LojaId { get; set; }
+        public Guid? LojaId { get; set; }
         [JsonIgnore]
         public LojaModel Loja { get; set; }
         [JsonIgnore]
@@ -19,7 +19,7 @@ namespace Renova.Domain.Model
         public Guid Id { get; set; }
         public string Valor { get; set; }
         [JsonIgnore]
-        public Guid LojaId { get; set; }
+        public Guid? LojaId { get; set; }
         [JsonIgnore]
         public LojaModel Loja { get; set; }
         [JsonIgnore]
@@ -31,7 +31,7 @@ namespace Renova.Domain.Model
         public Guid Id { get; set; }
         public string Valor { get; set; }
         [JsonIgnore]
-        public Guid LojaId { get; set; }
+        public Guid? LojaId { get; set; }
         [JsonIgnore]
         public LojaModel Loja { get; set; }
         [JsonIgnore]
@@ -43,7 +43,7 @@ namespace Renova.Domain.Model
         public Guid Id { get; set; }
         public string Valor { get; set; }
         [JsonIgnore]
-        public Guid LojaId { get; set; }
+        public Guid? LojaId { get; set; }
         [JsonIgnore]
         public LojaModel Loja { get; set; }
         [JsonIgnore]

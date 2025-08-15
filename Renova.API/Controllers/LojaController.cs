@@ -40,7 +40,7 @@ namespace Renova.API.Controllers
 
                 var loja = await _mediator.Send(new GetLojaByIdQuery() { Id = id });
 
-                if (loja.UsuarioId != usuario.Id)
+                if (loja?.UsuarioId != usuario.Id)
                     return Unauthorized();
 
                 return Ok(loja);

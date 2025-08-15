@@ -19,10 +19,7 @@ namespace Renova.API.Controllers
         {
             try
             {
-                if (!(await IsLojaFromUser(command)))
-                {
-                    return Unauthorized();
-                }
+                await IsLojaFromUser(command);
 
                 if(command.UsuarioId == null && (command.Email == null || command.Nome == null))
                 {
@@ -37,6 +34,10 @@ namespace Renova.API.Controllers
             {
                 return BadRequest(e.Message);
             }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
             catch (Exception e)
             {
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
@@ -45,28 +46,96 @@ namespace Renova.API.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ClienteModel), StatusCodes.Status200OK)]
-        public async Task<ActionResult> GetClienteById([FromRoute] Guid id, [FromQuery] GetClienteByIdQuery query)
+        public async Task<IActionResult> GetClienteById([FromRoute] Guid id, [FromQuery] GetClienteByIdQuery query)
         {
             try
             {
-                if (!(await IsLojaFromUser(query)))
-                {
-                    return Unauthorized();
-                }
+                await IsLojaFromUser(query);
 
                 query.Id = id;
                 var cliente = await _mediator.Send(query);
 
                 return Ok(cliente);
             }
+            catch(UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
             catch (Exception e) 
             {
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
             }
-
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> AtualizarCliente([FromRoute] Guid id, [FromBody] EditarClienteCommand command)
+        {
+            try
+            {
+                await IsLojaFromUser(command);
 
+                command.Id = id;
+                var cliente = await _mediator.Send(command);
 
+                return Ok(cliente);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<ClienteModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetClientesFromLojaId([FromQuery] GetClientesFromLojaIdQuery query)
+        {
+            try
+            {
+                await IsLojaFromUser(query);
+
+                var clientes = await _mediator.Send(query);
+
+                return Ok(clientes);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
+            }
+        }
+
+        [HttpGet("email/{email}")]
+        [ProducesResponseType(typeof(ClienteModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetClienteByEmail([FromRoute] string email, [FromQuery] GetClienteByEmailQuery query)
+        {
+            try
+            {
+                await IsLojaFromUser(query);
+                query.Email = email;
+
+                var cliente = await _mediator.Send(query);
+
+                return Ok(cliente);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
+            }
+        }
     }
 }
