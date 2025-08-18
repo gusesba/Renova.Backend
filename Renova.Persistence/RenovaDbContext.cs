@@ -232,7 +232,7 @@ namespace Renova.Persistence
                 entity.Property(p => p.Referencia).IsRequired();
                 entity.Property(p => p.Preco).HasColumnType("decimal(18,4)").IsRequired();
                 entity.Property(p => p.Status).IsRequired();
-                entity.Property(p => p.Descricao).HasMaxLength(200).IsRequired();
+                entity.Property(p => p.Descricao).HasMaxLength(200);
                 entity.Property(p => p.DataEntrada).IsRequired();
                 entity.Property(p => p.FornecedorId).IsRequired();
                 entity.Property(p => p.CorId).IsRequired();
