@@ -6,7 +6,6 @@ using System.Security.Claims;
 using Renova.Service.Queries.Usuario;
 using Renova.Service.Config;
 using Renova.Service.Queries.Loja;
-using Microsoft.OpenApi.Any;
 
 namespace Renova.API.Controllers
 {

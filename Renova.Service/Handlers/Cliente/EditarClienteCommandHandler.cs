@@ -2,11 +2,8 @@
 using Renova.Persistence;
 using MediatR;
 using Renova.Service.Commands.Cliente;
-using Renova.Service.Commands.Auth;
-using Renova.Service.Queries.Usuario;
 using System.ComponentModel.DataAnnotations;
 using Renova.Service.Queries.Cliente;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Renova.Service.Handlers.Cliente

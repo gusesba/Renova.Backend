@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Renova.Service.Config
+﻿namespace Renova.Service.Config
 {
     public abstract class BasePaginatedRequest<TResponse> : BaseRequest<TResponse>
     {
