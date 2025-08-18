@@ -64,7 +64,8 @@ namespace Renova.Service.Handlers.Cliente
             {
                 Items = clientes,
                 TotalCount = totalCount,
-                TotalPages = (int)Math.Ceiling(totalCount / (double)request.PageSize)
+                TotalPages = (int)Math.Ceiling(totalCount / (double)request.PageSize),
+                CurrentPage = skip + 1
             };
         }
 
