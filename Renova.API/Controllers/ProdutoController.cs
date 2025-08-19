@@ -41,7 +41,7 @@ namespace Renova.API.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(typeof(PagedResult<ProdutoModel>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(PagedResult<ProdutoModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProdutosByLojaId([FromQuery] GetProdutosFromLojaIdQuery command)
         {
             try
@@ -67,7 +67,7 @@ namespace Renova.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(PagedResult<ProdutoModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProdutoModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarProduto([FromRoute] Guid id, [FromBody] EditarProdutoCommand command)
         {
             try
@@ -90,6 +90,33 @@ namespace Renova.API.Controllers
             catch (KeyNotFoundException e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}/movimentacao")]
+        [ProducesResponseType(typeof(ProdutoModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProdutoParaMovimentacao([FromRoute] Guid id, [FromQuery] GetProdutoParaMovimentacaoQuery command)
+        {
+            try
+            {
+                await IsLojaFromUser(command);
+
+                command.Id = id;
+                var produto = await _mediator.Send(command);
+
+                return Ok(produto);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
             }
         }
     }
