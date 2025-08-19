@@ -5,15 +5,16 @@ namespace Renova.Domain.Model
     public class ProdutoMovimentacaoModel
     {
         public Guid Id { get; set; }
-        public decimal Valor { get; set; }
+        public decimal? Valor { get; set; }
 
         public Guid ProdutoId { get; set; }
         public ProdutoModel Produto { get; set; }
 
         public Guid MovimentacaoId { get; set; }
+        [JsonIgnore]
         public MovimentacaoModel Movimentacao { get; set; }
         [JsonIgnore]
-        public Guid LojaId { get; set; }
+        public Guid? LojaId { get; set; }
         [JsonIgnore]
         public LojaModel Loja { get; set; }
     }
