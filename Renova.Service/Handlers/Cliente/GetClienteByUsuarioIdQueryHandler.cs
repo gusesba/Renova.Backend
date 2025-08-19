@@ -1,7 +1,7 @@
-﻿using Renova.Persistence;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
+using Renova.Persistence;
 using Renova.Service.Queries.Cliente;
 
 namespace Renova.Service.Handlers.Cliente
@@ -18,8 +18,8 @@ namespace Renova.Service.Handlers.Cliente
         public async Task<ClienteModel?> Handle(GetClienteByUsuarioIdQuery request, CancellationToken cancellationToken)
         {
             var cliente = await _context.Cliente.
-                FirstOrDefaultAsync(cliente => 
-                (cliente.UsuarioId == request.UsuarioId) && 
+                FirstOrDefaultAsync(cliente =>
+                (cliente.UsuarioId == request.UsuarioId) &&
                 (cliente.LojaId == request.LojaId),
                 cancellationToken);
 

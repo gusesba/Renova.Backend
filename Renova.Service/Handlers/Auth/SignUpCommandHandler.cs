@@ -1,11 +1,11 @@
-﻿using Renova.Domain.Model;
-using Renova.Domain.Model.Dto;
-using Renova.Persistence;
+﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Renova.Domain.Model;
+using Renova.Domain.Model.Dto;
+using Renova.Persistence;
 using Renova.Service.Commands.Auth;
 using Renova.Service.Queries.Auth;
-using System.ComponentModel.DataAnnotations;
 
 namespace Renova.Service.Handlers.Auth
 {
@@ -28,7 +28,7 @@ namespace Renova.Service.Handlers.Auth
                 throw new ValidationException("Email já cadastrado.");
 
             string senhaHash = "";
-            if(request.Senha != "")
+            if (request.Senha != "")
             {
                 senhaHash = BCrypt.Net.BCrypt.HashPassword(request.Senha);
             }
@@ -40,7 +40,7 @@ namespace Renova.Service.Handlers.Auth
                 Nome = request.Nome
             };
 
-            await _context.Usuario.AddAsync(novoUsuario,cancellationToken);
+            await _context.Usuario.AddAsync(novoUsuario, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
             if (request.Senha == "")

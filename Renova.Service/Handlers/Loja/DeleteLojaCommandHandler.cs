@@ -1,5 +1,5 @@
-﻿using Renova.Persistence;
-using MediatR;
+﻿using MediatR;
+using Renova.Persistence;
 using Renova.Service.Commands.Loja;
 
 namespace Renova.Service.Handlers.Loja

@@ -1,9 +1,9 @@
-﻿using Renova.Domain.Model;
-using Renova.Persistence;
+﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
-using Renova.Service.Commands.PropriedadeProduto;
 using Microsoft.EntityFrameworkCore;
+using Renova.Domain.Model;
+using Renova.Persistence;
+using Renova.Service.Commands.PropriedadeProduto;
 
 
 namespace Renova.Service.Handlers.PropriedadeProduto
@@ -20,7 +20,7 @@ namespace Renova.Service.Handlers.PropriedadeProduto
         {
             var tipo = await _context.TipoProduto.Where(tipo => tipo.Valor.ToLower() == request.Valor.ToLower() && tipo.LojaId == request.LojaId).FirstOrDefaultAsync();
 
-            if(tipo != null)
+            if (tipo != null)
             {
                 throw new ValidationException("A tipo já existe");
             }

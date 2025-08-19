@@ -1,11 +1,11 @@
-﻿using MediatR;
+﻿using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Renova.Service.Queries.Usuario;
 using Renova.Service.Config;
 using Renova.Service.Queries.Loja;
+using Renova.Service.Queries.Usuario;
 
 namespace Renova.API.Controllers
 {
@@ -19,7 +19,7 @@ namespace Renova.API.Controllers
             _mediator = mediator;
         }
 
-        protected async Task<UsuarioModel?> GetUsuarioByToken() 
+        protected async Task<UsuarioModel?> GetUsuarioByToken()
         {
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             var usuario = await _mediator.Send(new GetUsuarioByEmailQuery() { Email = email });

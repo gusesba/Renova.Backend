@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model;
 using Renova.Domain.Settings;
 using Renova.Service.Commands.Produto;
 using Renova.Service.Queries.Produto;
-using System.ComponentModel.DataAnnotations;
 
 namespace Renova.API.Controllers
 {

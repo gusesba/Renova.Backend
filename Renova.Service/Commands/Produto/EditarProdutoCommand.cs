@@ -9,7 +9,7 @@ namespace Renova.Service.Commands.Produto
         public Guid? Id { get; set; }
         public Guid? FornecedorId { get; set; }
         public decimal? Preco { get; set; }
-        public StatusProdutoEnum? Status {  get; set; }
+        public StatusProdutoEnum? Status { get; set; }
         public Guid? CorId { get; set; }
         public Guid? TamanhoId { get; set; }
         public Guid? MarcaId { get; set; }

@@ -1,12 +1,12 @@
-﻿using Renova.Persistence;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
+using Renova.Persistence;
 using Renova.Service.Queries.Cliente;
 
 namespace Renova.Service.Handlers.Cliente
 {
-    public class GetClienteByIdQueryHandler : IRequestHandler<GetClienteByIdQuery,ClienteModel?>
+    public class GetClienteByIdQueryHandler : IRequestHandler<GetClienteByIdQuery, ClienteModel?>
     {
         private readonly RenovaDbContext _context;
 

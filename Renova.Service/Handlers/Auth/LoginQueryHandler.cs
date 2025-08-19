@@ -1,17 +1,17 @@
-﻿using Renova.Domain.Model.Dto;
-using Renova.Persistence;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Renova.Domain.Model.Dto;
 using Renova.Domain.Settings;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Renova.Persistence;
 using Renova.Service.Queries.Auth;
 
 namespace Renova.Service.Handlers.Auth
 {
-    public class LoginQueryHandler : IRequestHandler<LoginQuery,LoginDto>
+    public class LoginQueryHandler : IRequestHandler<LoginQuery, LoginDto>
     {
         private readonly RenovaDbContext _context;
         private readonly SettingsWebApi _settings;
@@ -24,7 +24,7 @@ namespace Renova.Service.Handlers.Auth
 
         public async Task<LoginDto> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(u=>u.Email == request.Email,cancellationToken);
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Senha, usuario.SenhaHash))
                 return null;
 

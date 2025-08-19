@@ -1,8 +1,8 @@
-﻿using Renova.Domain.Model;
-using Renova.Persistence;
+﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
+using Renova.Domain.Model;
+using Renova.Persistence;
 using Renova.Service.Commands.Cliente;
-using System.ComponentModel.DataAnnotations;
 using Renova.Service.Queries.Cliente;
 
 
@@ -26,16 +26,16 @@ namespace Renova.Service.Handlers.Cliente
             {
                 throw new KeyNotFoundException("Cliente não encontrado");
             }
-            
-            if(request.Apelido != null)
+
+            if (request.Apelido != null)
             {
                 cliente.Apelido = request.Apelido;
             }
-            if(request.UsuarioId != null)
+            if (request.UsuarioId != null)
             {
                 var existeCliente = await _mediator.Send(new GetClienteByUsuarioIdQuery() { UsuarioId = request.UsuarioId, LojaId = request.LojaId });
 
-                if(existeCliente != null)
+                if (existeCliente != null)
                 {
                     throw new ValidationException("O usuário já está atrelado a outro cliente");
                 }

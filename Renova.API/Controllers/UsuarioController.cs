@@ -1,9 +1,9 @@
-﻿using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model.Dto;
 using Renova.Service.Commands.Auth;
 using Renova.Service.Queries.Auth;
-using System.ComponentModel.DataAnnotations;
 
 namespace Renova.API.Controllers
 {
@@ -28,7 +28,7 @@ namespace Renova.API.Controllers
                     return Unauthorized();
 
                 return Ok(token);
-            } 
+            }
             catch (Exception e)
             {
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
@@ -40,10 +40,10 @@ namespace Renova.API.Controllers
 
         public async Task<IActionResult> Registrar([FromBody] SignUpCommand command)
         {
-            if(command.Senha == "")
+            if (command.Senha == "")
             {
                 return BadRequest("Senha não pode ser vazia");
-            }    
+            }
             try
             {
                 var token = await _mediator.Send(command);

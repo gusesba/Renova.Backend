@@ -1,12 +1,12 @@
-﻿using Renova.Domain.Model;
-using Renova.Persistence;
+﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
-using Renova.Service.Commands.Cliente;
-using Renova.Service.Commands.Auth;
-using Renova.Service.Queries.Usuario;
-using System.ComponentModel.DataAnnotations;
-using Renova.Service.Queries.Cliente;
 using Microsoft.EntityFrameworkCore;
+using Renova.Domain.Model;
+using Renova.Persistence;
+using Renova.Service.Commands.Auth;
+using Renova.Service.Commands.Cliente;
+using Renova.Service.Queries.Cliente;
+using Renova.Service.Queries.Usuario;
 
 
 namespace Renova.Service.Handlers.Cliente
@@ -43,7 +43,7 @@ namespace Renova.Service.Handlers.Cliente
 
             var proximaReferencia = await _context.Cliente
                 .Where(c => c.LojaId == request.LojaId)
-                .MaxAsync(c => (int?)c.Referencia,cancellationToken) ?? 0;
+                .MaxAsync(c => (int?)c.Referencia, cancellationToken) ?? 0;
 
             cliente = new()
             {

@@ -23,7 +23,7 @@ namespace Renova.API.Controllers
 
                 var loja = await _mediator.Send(command);
 
-                return Created($"api/loja/{loja.Id}",loja);
+                return Created($"api/loja/{loja.Id}", loja);
             }
             catch (Exception e)
             {
@@ -61,8 +61,8 @@ namespace Renova.API.Controllers
                 var lojas = await _mediator.Send(new GetLojasFromUsuarioIdQuery() { UsuarioId = usuario.Id });
 
                 return Ok(lojas);
-            } 
-            catch (Exception e) 
+            }
+            catch (Exception e)
             {
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
             }

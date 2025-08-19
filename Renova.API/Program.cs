@@ -1,10 +1,10 @@
-using Renova.Persistence;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Renova.Domain.Settings;
+using Renova.Persistence;
 using Renova.Service.Config;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +66,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(ServiceConfiguration.GetAssembly())); 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(ServiceConfiguration.GetAssembly()));
 
 var app = builder.Build();
 

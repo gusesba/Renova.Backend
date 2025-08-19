@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
 using Renova.Domain.Settings;
 using Renova.Persistence;
-using Renova.Service.Queries.Produto;
 using Renova.Service.Helpers;
+using Renova.Service.Queries.Produto;
 
 namespace Renova.Service.Handlers.Produto
 {

@@ -1,12 +1,12 @@
-﻿using Renova.Persistence;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
+using Renova.Persistence;
 using Renova.Service.Queries.Produto;
 
 namespace Renova.Service.Handlers.Produto
 {
-    public class GetProdutoByIdQueryHandler : IRequestHandler<GetProdutoByIdQuery,ProdutoModel?>
+    public class GetProdutoByIdQueryHandler : IRequestHandler<GetProdutoByIdQuery, ProdutoModel?>
     {
         private readonly RenovaDbContext _context;
 

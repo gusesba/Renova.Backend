@@ -1,5 +1,5 @@
-﻿using Renova.Domain.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Renova.Domain.Model;
 
 namespace Renova.Persistence
 {

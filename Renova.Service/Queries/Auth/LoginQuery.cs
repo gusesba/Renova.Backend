@@ -1,5 +1,5 @@
-﻿using Renova.Domain.Model.Dto;
-using MediatR;
+﻿using MediatR;
+using Renova.Domain.Model.Dto;
 
 namespace Renova.Service.Queries.Auth
 {

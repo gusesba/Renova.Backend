@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model;
 using Renova.Domain.Settings;
 using Renova.Service.Commands.Cliente;
 using Renova.Service.Queries.Cliente;
-using System.ComponentModel.DataAnnotations;
 
 namespace Renova.API.Controllers
 {
@@ -22,7 +22,7 @@ namespace Renova.API.Controllers
             {
                 await IsLojaFromUser(command);
 
-                if(command.UsuarioId == null && (command.Email == null || command.Nome == null))
+                if (command.UsuarioId == null && (command.Email == null || command.Nome == null))
                 {
                     return BadRequest("Usuario Id ou Email/Nome devem estar preenchidos");
                 }
@@ -58,11 +58,11 @@ namespace Renova.API.Controllers
 
                 return Ok(cliente);
             }
-            catch(UnauthorizedAccessException)
+            catch (UnauthorizedAccessException)
             {
                 return Unauthorized();
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
             }

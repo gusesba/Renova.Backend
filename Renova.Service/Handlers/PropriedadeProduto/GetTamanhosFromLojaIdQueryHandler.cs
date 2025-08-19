@@ -1,9 +1,9 @@
-﻿using Renova.Persistence;
-using MediatR;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
 using Renova.Domain.Settings;
+using Renova.Persistence;
 using Renova.Service.Queries.PropriedadeProduto;
-using Microsoft.EntityFrameworkCore;
 
 namespace Renova.Service.Handlers.PropriedadeProduto
 {

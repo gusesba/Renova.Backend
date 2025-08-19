@@ -22,7 +22,7 @@ namespace Renova.Service.Handlers.Produto
         {
             var proximaReferencia = await _context.Produto
                 .Where(p => p.LojaId == request.LojaId)
-                .MaxAsync(p => (int?)p.Referencia,cancellationToken) ?? 0;
+                .MaxAsync(p => (int?)p.Referencia, cancellationToken) ?? 0;
 
             var produto = new ProdutoModel()
             {

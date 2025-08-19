@@ -1,6 +1,6 @@
-﻿using Renova.Domain.Model;
+﻿using MediatR;
+using Renova.Domain.Model;
 using Renova.Persistence;
-using MediatR;
 using Renova.Service.Commands.Loja;
 
 namespace Renova.Service.Handlers.Loja
@@ -15,7 +15,7 @@ namespace Renova.Service.Handlers.Loja
 
         public async Task<LojaModel> Handle(CriarLojaCommand request, CancellationToken cancellationToken)
         {
-           var lojaModel = new LojaModel
+            var lojaModel = new LojaModel
             {
                 Nome = request.Nome,
                 UsuarioId = request.UsuarioId

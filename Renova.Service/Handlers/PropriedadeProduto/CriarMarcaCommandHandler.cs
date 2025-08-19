@@ -1,9 +1,9 @@
-﻿using Renova.Domain.Model;
-using Renova.Persistence;
+﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
-using Renova.Service.Commands.PropriedadeProduto;
 using Microsoft.EntityFrameworkCore;
+using Renova.Domain.Model;
+using Renova.Persistence;
+using Renova.Service.Commands.PropriedadeProduto;
 
 
 namespace Renova.Service.Handlers.PropriedadeProduto
@@ -20,7 +20,7 @@ namespace Renova.Service.Handlers.PropriedadeProduto
         {
             var marca = await _context.MarcaProduto.Where(marca => marca.Valor.ToLower() == request.Valor.ToLower() && marca.LojaId == request.LojaId).FirstOrDefaultAsync();
 
-            if(marca != null)
+            if (marca != null)
             {
                 throw new ValidationException("A marca já existe");
             }

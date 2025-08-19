@@ -1,6 +1,6 @@
-﻿using Renova.Domain.Model;
+﻿using MediatR;
+using Renova.Domain.Model;
 using Renova.Persistence;
-using MediatR;
 using Renova.Service.Commands.Loja;
 
 namespace Renova.Service.Handlers.Loja
@@ -21,12 +21,12 @@ namespace Renova.Service.Handlers.Loja
             {
                 throw new KeyNotFoundException("Loja não encontrada");
             }
-            if(loja.UsuarioId != request.UsuarioId)
+            if (loja.UsuarioId != request.UsuarioId)
             {
                 throw new UnauthorizedAccessException("Loja não encontrada");
             }
 
-            if(request.Nome != null)
+            if (request.Nome != null)
             {
                 loja.Nome = request.Nome;
             }

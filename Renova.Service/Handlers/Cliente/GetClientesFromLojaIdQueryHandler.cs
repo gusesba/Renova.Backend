@@ -1,9 +1,9 @@
-﻿using Renova.Persistence;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
-using Renova.Service.Queries.Cliente;
 using Renova.Domain.Settings;
+using Renova.Persistence;
+using Renova.Service.Queries.Cliente;
 
 namespace Renova.Service.Handlers.Cliente
 {
@@ -50,7 +50,7 @@ namespace Renova.Service.Handlers.Cliente
                 "email" => ascending ? query.OrderBy(c => c.Usuario.Email) : query.OrderByDescending(c => c.Usuario.Email),
                 "nome" => ascending ? query.OrderBy(c => c.Usuario.Nome) : query.OrderByDescending(c => c.Usuario.Nome),
                 "apelido" => ascending ? query.OrderBy(c => c.Apelido) : query.OrderByDescending(c => c.Apelido),
-                "referencia" or _ => ascending ? query.OrderBy(c=>c.Referencia) : query.OrderByDescending(c => c.Referencia),
+                "referencia" or _ => ascending ? query.OrderBy(c => c.Referencia) : query.OrderByDescending(c => c.Referencia),
             };
 
             var skip = (request.Page - 1) * request.PageSize;

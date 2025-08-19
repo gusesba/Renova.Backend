@@ -1,8 +1,8 @@
-﻿using Renova.Domain.Model;
-using Renova.Persistence;
+﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Renova.Domain.Model;
+using Renova.Persistence;
 using Renova.Service.Commands.PropriedadeProduto;
 
 
@@ -20,7 +20,7 @@ namespace Renova.Service.Handlers.PropriedadeProduto
         {
             var cor = await _context.CorProduto.Where(cor => cor.Valor.ToLower() == request.Valor.ToLower() && cor.LojaId == request.LojaId).FirstOrDefaultAsync();
 
-            if(cor != null)
+            if (cor != null)
             {
                 throw new ValidationException("A cor já existe");
             }

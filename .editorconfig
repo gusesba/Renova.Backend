@@ -8,3 +8,5 @@ dotnet_style_qualification_for_field = false:suggestion
 dotnet_style_qualification_for_property = false:suggestion
 dotnet_style_qualification_for_method = false:suggestion
 dotnet_style_qualification_for_event = false:suggestion
+dotnet_separate_import_directive_groups = false
+dotnet_remove_unnecessary_imports = true

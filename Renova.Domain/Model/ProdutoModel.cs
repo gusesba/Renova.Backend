@@ -1,5 +1,5 @@
-﻿using Renova.Domain.Model.Enum;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Renova.Domain.Model.Enum;
 
 namespace Renova.Domain.Model
 {
