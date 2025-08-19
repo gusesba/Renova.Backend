@@ -65,5 +65,32 @@ namespace Renova.API.Controllers
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
             }
         }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(PagedResult<ProdutoModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> AtualizarProduto([FromRoute] Guid id, [FromBody] EditarProdutoCommand command)
+        {
+            try
+            {
+                await IsLojaFromUser(command);
+
+                command.Id = id;
+                var produto = await _mediator.Send(command);
+
+                return Ok(produto);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

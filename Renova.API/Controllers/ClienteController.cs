@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model;
+using Renova.Domain.Settings;
 using Renova.Service.Commands.Cliente;
 using Renova.Service.Queries.Cliente;
 using System.ComponentModel.DataAnnotations;
@@ -68,6 +69,7 @@ namespace Renova.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ClienteModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarCliente([FromRoute] Guid id, [FromBody] EditarClienteCommand command)
         {
             try
@@ -94,7 +96,7 @@ namespace Renova.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<ClienteModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedResult<ClienteModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetClientesFromLojaId([FromQuery] GetClientesFromLojaIdQuery query)
         {
             try
