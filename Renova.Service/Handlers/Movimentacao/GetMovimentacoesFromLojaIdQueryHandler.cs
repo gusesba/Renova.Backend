@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Renova.Domain.Model;
 using Renova.Domain.Model.Dto;
 using Renova.Domain.Settings;
 using Renova.Persistence;

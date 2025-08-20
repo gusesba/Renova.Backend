@@ -1,5 +1,4 @@
-﻿using Renova.Domain.Model;
-using Renova.Domain.Model.Dto;
+﻿using Renova.Domain.Model.Dto;
 using Renova.Domain.Model.Enum;
 using Renova.Domain.Settings;
 using Renova.Service.Config;
