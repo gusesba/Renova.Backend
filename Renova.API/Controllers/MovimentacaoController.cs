@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model;
 using Renova.Domain.Settings;
 using Renova.Service.Commands.Movimentacao;
+using Renova.Service.Queries.Movimentacao;
 
 namespace Renova.API.Controllers
 {
@@ -24,6 +25,32 @@ namespace Renova.API.Controllers
                 var movimentacao = await _mediator.Send(command);
 
                 return Created($"api/movimentacao/{movimentacao.Id}", movimentacao);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
+            }
+        }
+
+        [HttpGet()]
+        [ProducesResponseType(typeof(PagedResult<MovimentacaoModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMovimentacoesByLojaId([FromQuery] GetMovimentacoesFromLojaIdQuery command)
+        {
+            try
+            {
+                await IsLojaFromUser(command);
+
+                var movimentacoes = await _mediator.Send(command);
+
+                return Ok(movimentacoes);
             }
             catch (ValidationException e)
             {

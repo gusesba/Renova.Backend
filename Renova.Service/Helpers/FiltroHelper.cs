@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Renova.Domain.Model;
 
 namespace Renova.Service.Helpers
 {

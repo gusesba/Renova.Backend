@@ -16,6 +16,7 @@ namespace Renova.Domain.Model
         public DateTime? DataPagamento { get; set; }
 
         public Guid MovimentacaoId { get; set; }
+        [JsonIgnore]
         public MovimentacaoModel Movimentacao { get; set; }
         [JsonIgnore]
         public Guid? LojaId { get; set; }
