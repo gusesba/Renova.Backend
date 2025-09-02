@@ -9,6 +9,7 @@ namespace Renova.Service.Commands.Movimentacao
     {
         public List<ProdutoValorDto> Produtos { get; set; }
         public TipoMovimentacaoEnum? Tipo { get; set; }
+        public Guid? ClienteID { get; set; }
         public DateTime? Data { get; set; }
     }
 }

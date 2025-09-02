@@ -2,11 +2,11 @@
 
 namespace Renova.Domain.Model
 {
-    public class MetodoPagamento
+    public class MetodoPagamentoModel
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
-        public decimal Taxa { get; set; }
+        public decimal? Taxa { get; set; }
         [JsonIgnore]
         public ICollection<ContasAPagarModel> ContasAPagar { get; set; }
         [JsonIgnore]

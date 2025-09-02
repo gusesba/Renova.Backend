@@ -20,7 +20,7 @@ namespace Renova.Persistence
         public DbSet<TipoProdutoModel> TipoProduto { get; set; }
         public DbSet<TamanhoProdutoModel> TamanhoProduto { get; set; }
         public DbSet<MarcaProdutoModel> MarcaProduto { get; set; }
-        public DbSet<MetodoPagamento> MetodoPagamento { get; set; }
+        public DbSet<MetodoPagamentoModel> MetodoPagamento { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,6 +75,11 @@ namespace Renova.Persistence
                         .WithOne(p => p.Fornecedor)
                         .HasForeignKey(p => p.FornecedorId)
                         .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasMany(p => p.MovimentacaoModels)
+                      .WithOne(p => p.Cliente)
+                      .HasForeignKey(p => p.ClienteId)
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
             // Telefone
@@ -180,6 +185,7 @@ namespace Renova.Persistence
                 entity.Property(p => p.DataPagamento).IsRequired(false);
                 entity.Property(p => p.MovimentacaoId).IsRequired();
                 entity.Property(p => p.LojaId).IsRequired();
+                entity.Property(p => p.MetodoPagamentoId).IsRequired(false);
 
                 entity.HasOne(p => p.Original)
                       .WithMany()
@@ -216,7 +222,9 @@ namespace Renova.Persistence
                 entity.Property(p => p.DataVencimento).IsRequired();
                 entity.Property(p => p.DataPagamento).IsRequired(false);
                 entity.Property(p => p.MovimentacaoId).IsRequired();
+                entity.Property(p => p.MetodoPagamentoId).IsRequired(false);
                 entity.Property(p => p.LojaId).IsRequired();
+
 
                 entity.HasOne(p => p.Original)
                       .WithMany()
@@ -329,6 +337,12 @@ namespace Renova.Persistence
                 entity.Property(p => p.Data).IsRequired();
                 entity.Property(p => p.Tipo).IsRequired();
                 entity.Property(p => p.LojaId).IsRequired();
+                entity.Property(p => p.ClienteId).IsRequired();
+
+                entity.HasOne(p => p.Cliente)
+                      .WithMany(c => c.MovimentacaoModels)
+                      .HasForeignKey(p => p.ClienteId)
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(p => p.Loja)
                       .WithMany(l => l.Movimentacoes)
@@ -437,7 +451,7 @@ namespace Renova.Persistence
                         .OnDelete(DeleteBehavior.NoAction);
             });
 
-            modelBuilder.Entity<MetodoPagamento>(entity =>
+            modelBuilder.Entity<MetodoPagamentoModel>(entity =>
             {
                 entity.ToTable("MetodoPagamento");
                 entity.HasKey(p => p.Id);

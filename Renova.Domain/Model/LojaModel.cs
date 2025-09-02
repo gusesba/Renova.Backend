@@ -33,7 +33,7 @@ namespace Renova.Domain.Model
         [JsonIgnore]
         public ICollection<ProdutoMovimentacaoModel> ProdutoMovimentacoes { get; set; }
         [JsonIgnore]
-        public ICollection<MetodoPagamento> MetodosPagamento { get; set; }
+        public ICollection<MetodoPagamentoModel> MetodosPagamento { get; set; }
     }
 
 }

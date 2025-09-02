@@ -67,7 +67,8 @@ namespace Renova.Service.Handlers.Movimentacao
                 LojaId = request.LojaId,
                 Tipo = request.Tipo ?? TipoMovimentacaoEnum.Venda,
                 Data = request.Data ?? DateTime.UtcNow,
-                ProdutoMovimentacoes = produtosMovimentacao
+                ProdutoMovimentacoes = produtosMovimentacao,
+                ClienteId = request.ClienteID
             };
             foreach (var pm in produtosMovimentacao)
             {
@@ -82,7 +83,8 @@ namespace Renova.Service.Handlers.Movimentacao
                 TotParcela = 1,
                 MovimentacaoId = movimentacao.Id,
                 LojaId = request.LojaId,
-                DataVencimento = DateTime.UtcNow.AddDays(30)
+                DataVencimento = DateTime.UtcNow.AddDays(30),
+                MetodoPagamentoId = null
             };
 
             await _context.ContasAReceber.AddAsync(contasAReceber, cancellationToken);
@@ -95,7 +97,8 @@ namespace Renova.Service.Handlers.Movimentacao
                 TotParcela = 1,
                 MovimentacaoId = movimentacao.Id,
                 LojaId = request.LojaId,
-                DataVencimento = DateTime.UtcNow.AddDays(30)
+                DataVencimento = DateTime.UtcNow.AddDays(30),
+                MetodoPagamentoId = null
             };
 
             await _context.ContasAPagar.AddAsync(contasAPagar, cancellationToken);

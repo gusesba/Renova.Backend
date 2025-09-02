@@ -14,8 +14,8 @@ namespace Renova.Domain.Model
         public int TotParcela { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
-        public Guid MetodoPagamentoId { get; set; }
-        public MetodoPagamento MetodoPagamento { get; set; }
+        public Guid? MetodoPagamentoId { get; set; }
+        public MetodoPagamentoModel MetodoPagamento { get; set; }
 
         public Guid MovimentacaoId { get; set; }
         [JsonIgnore]

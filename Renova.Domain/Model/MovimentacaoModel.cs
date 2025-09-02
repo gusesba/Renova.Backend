@@ -8,6 +8,9 @@ namespace Renova.Domain.Model
         public Guid Id { get; set; }
         public TipoMovimentacaoEnum Tipo { get; set; }
         public DateTime Data { get; set; }
+        public Guid? ClienteId { get; set; }
+        [JsonIgnore]
+        public ClienteModel Cliente { get; set; }
         [JsonIgnore]
         public Guid? LojaId { get; set; }
         [JsonIgnore]

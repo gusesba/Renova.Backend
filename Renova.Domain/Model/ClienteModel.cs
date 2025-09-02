@@ -8,6 +8,7 @@ namespace Renova.Domain.Model
         public int Referencia { get; set; }
         public string? Apelido { get; set; }
 
+        public ICollection<MovimentacaoModel> MovimentacaoModels { get; set; }
         public Guid? UsuarioId { get; set; }
         public UsuarioModel Usuario { get; set; }
         [JsonIgnore]
