@@ -32,6 +32,8 @@ namespace Renova.Domain.Model
         public ICollection<ContasAReceberModel> ContasAReceber { get; set; }
         [JsonIgnore]
         public ICollection<ProdutoMovimentacaoModel> ProdutoMovimentacoes { get; set; }
+        [JsonIgnore]
+        public ICollection<MetodoPagamento> MetodosPagamento { get; set; }
     }
 
 }

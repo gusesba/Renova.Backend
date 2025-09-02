@@ -20,6 +20,7 @@ namespace Renova.Persistence
         public DbSet<TipoProdutoModel> TipoProduto { get; set; }
         public DbSet<TamanhoProdutoModel> TamanhoProduto { get; set; }
         public DbSet<MarcaProdutoModel> MarcaProduto { get; set; }
+        public DbSet<MetodoPagamento> MetodoPagamento { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -157,6 +158,11 @@ namespace Renova.Persistence
                         .WithOne(p => p.Loja)
                         .HasForeignKey(p => p.LojaId)
                         .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasMany(p => p.MetodosPagamento)
+                        .WithOne(p => p.Loja)
+                        .HasForeignKey(p => p.LojaId)
+                        .OnDelete(DeleteBehavior.NoAction);
             });
 
             // ContasAPagar
@@ -183,6 +189,11 @@ namespace Renova.Persistence
                 entity.HasOne(p => p.Movimentacao)
                       .WithMany(p => p.ContasAPagar)
                       .HasForeignKey(p => p.MovimentacaoId)
+                      .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(p => p.MetodoPagamento)
+                      .WithMany(p => p.ContasAPagar)
+                      .HasForeignKey(p => p.MetodoPagamentoId)
                       .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(p => p.Loja)
@@ -215,6 +226,11 @@ namespace Renova.Persistence
                 entity.HasOne(p => p.Movimentacao)
                       .WithMany(p => p.ContasAReceber)
                       .HasForeignKey(p => p.MovimentacaoId)
+                      .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(p => p.MetodoPagamento)
+                      .WithMany(p => p.ContasAReceber)
+                      .HasForeignKey(p => p.MetodoPagamentoId)
                       .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(p => p.Loja)
@@ -418,6 +434,30 @@ namespace Renova.Persistence
                 entity.HasMany(p => p.Produtos)
                         .WithOne(p => p.Marca)
                         .HasForeignKey(p => p.MarcaId)
+                        .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<MetodoPagamento>(entity =>
+            {
+                entity.ToTable("MetodoPagamento");
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Id).ValueGeneratedOnAdd();
+                entity.Property(p => p.Taxa).IsRequired();
+                entity.Property(p => p.LojaId).IsRequired();
+
+                entity.HasOne(p => p.Loja)
+                      .WithMany(l => l.MetodosPagamento)
+                      .HasForeignKey(p => p.LojaId)
+                      .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasMany(p => p.ContasAReceber)
+                        .WithOne(p => p.MetodoPagamento)
+                        .HasForeignKey(p => p.MetodoPagamentoId)
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasMany(p => p.ContasAPagar)
+                        .WithOne(p => p.MetodoPagamento)
+                        .HasForeignKey(p => p.MetodoPagamentoId)
                         .OnDelete(DeleteBehavior.NoAction);
             });
         }

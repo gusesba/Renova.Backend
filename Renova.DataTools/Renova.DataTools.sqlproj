@@ -73,6 +73,7 @@
     <Build Include="Tables\ProdutoMovimentacao.sql" />
     <Build Include="Tables\ContasAPagar.sql" />
     <Build Include="Tables\ContasAReceber.sql" />
+    <Build Include="Tables\MetodoPagamento.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CompareSQL.scmp" />
