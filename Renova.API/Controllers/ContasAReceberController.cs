@@ -66,5 +66,32 @@ namespace Renova.API.Controllers
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
             }
         }
+
+        [HttpPut("dividir/{id}")]
+        [ProducesResponseType(typeof(ContasAReceberModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DividirContaAReceber([FromRoute] Guid id, [FromBody] DividirContasAReceberCommand command)
+        {
+            try
+            {
+                await IsLojaFromUser(command);
+
+                command.Id = id;
+                var contaAReceber = await _mediator.Send(command);
+
+                return Ok(contaAReceber);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
