@@ -4,10 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
 using Renova.Domain.Model.Enum;
 using Renova.Persistence;
-using Renova.Service.Commands.Cliente;
 using Renova.Service.Commands.ContasAPagar;
-using Renova.Service.Queries.Cliente;
-
 
 namespace Renova.Service.Handlers.ContasAPagar
 {
@@ -37,6 +34,7 @@ namespace Renova.Service.Handlers.ContasAPagar
 
             contasAPagar.Status = StatusContaEnum.Pago;
             contasAPagar.MetodoPagamentoId = request.MetodoPagamentoId;
+            contasAPagar.DataPagamento = DateTime.UtcNow;
 
             _context.ContasAPagar.Update(contasAPagar);
             await _context.SaveChangesAsync();

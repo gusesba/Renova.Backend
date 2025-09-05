@@ -40,7 +40,7 @@ namespace Renova.Service.Helpers
             return query;
         }
 
-        public static IQueryable<T> ApplyDateFilter<T>(IQueryable<T> query, string? filtro, Expression<Func<T, DateTime>> selector)
+        public static IQueryable<T> ApplyDateFilter<T>(IQueryable<T> query, string? filtro, Expression<Func<T, DateTime?>> selector)
         {
             if (string.IsNullOrWhiteSpace(filtro))
                 return query;

@@ -2,10 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model;
-using Renova.Domain.Settings;
-using Renova.Service.Commands.Cliente;
 using Renova.Service.Commands.ContasAPagar;
-using Renova.Service.Queries.Cliente;
 
 namespace Renova.API.Controllers
 {
