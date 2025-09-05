@@ -14,7 +14,7 @@ namespace Renova.API.Controllers
     {
         public ContasAReceberController(IMediator mediator) : base(mediator) { }
 
-        [HttpPut("{id}")]
+        [HttpPut("pagar/{id}")]
         [ProducesResponseType(typeof(ContasAReceberModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> PagarContaAReceber([FromRoute] Guid id, [FromBody] PagarContasAReceberCommand command)
         {

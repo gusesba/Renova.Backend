@@ -14,7 +14,7 @@ namespace Renova.API.Controllers
     {
         public ContasAPagarController(IMediator mediator) : base(mediator) { }
 
-        [HttpPut("{id}")]
+        [HttpPut("pagar/{id}")]
         [ProducesResponseType(typeof(ContasAPagarModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> PagarContaAPagar([FromRoute] Guid id, [FromBody] PagarContasAPagarCommand command)
         {
@@ -64,6 +64,33 @@ namespace Renova.API.Controllers
             catch (Exception e)
             {
                 return StatusCode(500, "Erro Inesperado. Mensagem: " + e.Message);
+            }
+        }
+
+        [HttpPut("dividir/{id}")]
+        [ProducesResponseType(typeof(ContasAPagarModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DividirContaAPagar([FromRoute] Guid id, [FromBody] DividirContasAPagarCommand command)
+        {
+            try
+            {
+                await IsLojaFromUser(command);
+
+                command.Id = id;
+                var contaAPagar = await _mediator.Send(command);
+
+                return Ok(contaAPagar);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }
