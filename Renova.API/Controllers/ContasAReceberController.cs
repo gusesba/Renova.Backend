@@ -3,9 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Renova.Domain.Model;
 using Renova.Domain.Settings;
-using Renova.Service.Commands.ContasAPagar;
+using Renova.Service.Commands.ContasAReceber;
 using Renova.Service.Queries.ContasAReceber;
-using Renova.Service.Queries.Produto;
 
 namespace Renova.API.Controllers
 {
@@ -15,32 +14,32 @@ namespace Renova.API.Controllers
     {
         public ContasAReceberController(IMediator mediator) : base(mediator) { }
 
-        //[HttpPut("{id}")]
-        //[ProducesResponseType(typeof(ContasAReceberModel), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> PagarContaAPagar([FromRoute] Guid id, [FromBody] PagarContasAPagarCommand command)
-        //{
-        //    try
-        //    {
-        //        await IsLojaFromUser(command);
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ContasAReceberModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> PagarContaAReceber([FromRoute] Guid id, [FromBody] PagarContasAReceberCommand command)
+        {
+            try
+            {
+                await IsLojaFromUser(command);
 
-        //        command.Id = id;
-        //        var contaAPagar = await _mediator.Send(command);
+                command.Id = id;
+                var contaAReceber = await _mediator.Send(command);
 
-        //        return Ok(contaAPagar);
-        //    }
-        //    catch (UnauthorizedAccessException)
-        //    {
-        //        return Unauthorized();
-        //    }
-        //    catch (ValidationException e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-        //    catch (KeyNotFoundException e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-        //}
+                return Ok(contaAReceber);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpGet()]
         [ProducesResponseType(typeof(PagedResult<ContasAReceberModel>), StatusCodes.Status200OK)]
