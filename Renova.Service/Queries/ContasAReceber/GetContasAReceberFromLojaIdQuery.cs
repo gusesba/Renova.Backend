@@ -1,11 +1,11 @@
-﻿using Renova.Domain.Model;
+﻿using Renova.Domain.Model.Dto;
 using Renova.Domain.Model.Enum;
 using Renova.Domain.Settings;
 using Renova.Service.Config;
 
 namespace Renova.Service.Queries.ContasAReceber
 {
-    public class GetContasAReceberFromLojaIdQuery : BasePaginatedRequest<PagedResult<ContasAReceberModel>>
+    public class GetContasAReceberFromLojaIdQuery : BasePaginatedRequest<PagedResult<GetContasAReceberDto>>
     {
         public string? Valor { get; set; }
         public StatusContaEnum? Status { get; set; }

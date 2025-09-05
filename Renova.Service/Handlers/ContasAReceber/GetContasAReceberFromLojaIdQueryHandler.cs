@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Renova.Domain.Model;
+using Renova.Domain.Model.Dto;
 using Renova.Domain.Settings;
 using Renova.Persistence;
 using Renova.Service.Helpers;
@@ -8,7 +9,7 @@ using Renova.Service.Queries.ContasAReceber;
 
 namespace Renova.Service.Handlers.ContasAReceber
 {
-    public class GetContasAReceberFromLojaIdQueryHandler : IRequestHandler<GetContasAReceberFromLojaIdQuery, PagedResult<ContasAReceberModel>>
+    public class GetContasAReceberFromLojaIdQueryHandler : IRequestHandler<GetContasAReceberFromLojaIdQuery, PagedResult<GetContasAReceberDto>>
     {
         private readonly RenovaDbContext _context;
 
@@ -17,7 +18,7 @@ namespace Renova.Service.Handlers.ContasAReceber
             _context = context;
         }
 
-        public async Task<PagedResult<ContasAReceberModel>> Handle(GetContasAReceberFromLojaIdQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<GetContasAReceberDto>> Handle(GetContasAReceberFromLojaIdQuery request, CancellationToken cancellationToken)
         {
             var query = _context.ContasAReceber
                 .Include(c => c.MetodoPagamento)
@@ -83,9 +84,34 @@ namespace Renova.Service.Handlers.ContasAReceber
             var contasAReceberModels = await query
                 .Skip(skip)
                 .Take(request.PageSize)
+                .Select(m => new GetContasAReceberDto
+                {
+                    Id = m.Id,
+                    Valor = m.Valor,
+                    Status = m.Status,
+                    OriginalId = m.OriginalId,
+                    Original = m.Original,
+                    NumParcela = m.NumParcela,
+                    TotParcela = m.TotParcela,
+                    DataVencimento = m.DataVencimento,
+                    DataPagamento = m.DataPagamento,
+                    MetodoPagamentoId = m.MetodoPagamentoId,
+                    MetodoPagamento = m.MetodoPagamento,
+                    MovimentacaoId = m.MovimentacaoId,
+                    Movimentacao = new MovimentacaoClienteDto()
+                    {
+                        Id = m.Movimentacao.Id,
+                        Cliente = m.Movimentacao.Cliente,
+                        ClienteId = m.Movimentacao.ClienteId,
+                        Data = m.Movimentacao.Data,
+                        Tipo = m.Movimentacao.Tipo
+                    },
+                    LojaId = m.LojaId,
+                    Loja = m.Loja,
+                })
                 .ToListAsync(cancellationToken);
 
-            return new PagedResult<ContasAReceberModel>
+            return new PagedResult<GetContasAReceberDto>
             {
                 Items = contasAReceberModels,
                 TotalCount = totalCount,

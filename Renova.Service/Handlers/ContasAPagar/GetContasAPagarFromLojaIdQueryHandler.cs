@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Renova.Domain.Model;
+using Renova.Domain.Model.Dto;
 using Renova.Domain.Settings;
 using Renova.Persistence;
 using Renova.Service.Helpers;
@@ -8,7 +8,7 @@ using Renova.Service.Queries.ContasAPagar;
 
 namespace Renova.Service.Handlers.ContasAPagar
 {
-    public class GetContasAPagarFromLojaIdQueryHandler : IRequestHandler<GetContasAPagarFromLojaIdQuery, PagedResult<ContasAPagarModel>>
+    public class GetContasAPagarFromLojaIdQueryHandler : IRequestHandler<GetContasAPagarFromLojaIdQuery, PagedResult<GetContasAPagarDto>>
     {
         private readonly RenovaDbContext _context;
 
@@ -17,7 +17,7 @@ namespace Renova.Service.Handlers.ContasAPagar
             _context = context;
         }
 
-        public async Task<PagedResult<ContasAPagarModel>> Handle(GetContasAPagarFromLojaIdQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<GetContasAPagarDto>> Handle(GetContasAPagarFromLojaIdQuery request, CancellationToken cancellationToken)
         {
             var query = _context.ContasAPagar
                 .Include(c => c.MetodoPagamento)
@@ -83,9 +83,34 @@ namespace Renova.Service.Handlers.ContasAPagar
             var contasAPagarModels = await query
                 .Skip(skip)
                 .Take(request.PageSize)
+                .Select(m => new GetContasAPagarDto
+                {
+                    Id = m.Id,
+                    Valor = m.Valor,
+                    Status = m.Status,
+                    OriginalId = m.OriginalId,
+                    Original = m.Original,
+                    NumParcela = m.NumParcela,
+                    TotParcela = m.TotParcela,
+                    DataVencimento = m.DataVencimento,
+                    DataPagamento = m.DataPagamento,
+                    MetodoPagamentoId = m.MetodoPagamentoId,
+                    MetodoPagamento = m.MetodoPagamento,
+                    MovimentacaoId = m.MovimentacaoId,
+                    Movimentacao = new MovimentacaoClienteDto()
+                    {
+                        Id = m.Movimentacao.Id,
+                        Cliente = m.Movimentacao.Cliente,
+                        ClienteId = m.Movimentacao.ClienteId,
+                        Data = m.Movimentacao.Data,
+                        Tipo = m.Movimentacao.Tipo
+                    },
+                    LojaId = m.LojaId,
+                    Loja = m.Loja,
+                })
                 .ToListAsync(cancellationToken);
 
-            return new PagedResult<ContasAPagarModel>
+            return new PagedResult<GetContasAPagarDto>
             {
                 Items = contasAPagarModels,
                 TotalCount = totalCount,

@@ -1,0 +1,27 @@
+﻿using System.Text.Json.Serialization;
+using Renova.Domain.Model.Enum;
+
+namespace Renova.Domain.Model.Dto
+{
+    public class GetContasAReceberDto
+    {
+        public Guid Id { get; set; }
+        public decimal Valor { get; set; }
+        public StatusContaEnum Status { get; set; }
+        public Guid? OriginalId { get; set; }
+        public ContasAReceberModel? Original { get; set; }
+        public int NumParcela { get; set; }
+        public int TotParcela { get; set; }
+        public DateTime DataVencimento { get; set; }
+        public DateTime? DataPagamento { get; set; }
+        public Guid? MetodoPagamentoId { get; set; }
+        public MetodoPagamentoModel MetodoPagamento { get; set; }
+
+        public Guid MovimentacaoId { get; set; }
+        public MovimentacaoClienteDto Movimentacao { get; set; }
+        [JsonIgnore]
+        public Guid? LojaId { get; set; }
+        [JsonIgnore]
+        public LojaModel Loja { get; set; }
+    }
+}
