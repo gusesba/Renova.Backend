@@ -21,6 +21,8 @@ namespace Renova.Service.Handlers.ContasAPagar
         {
             var query = _context.ContasAPagar
                 .Include(c => c.MetodoPagamento)
+                .Include(c => c.Movimentacao)
+                .ThenInclude(c => c.Cliente)
                 .Where(c => c.LojaId == request.LojaId);
 
             if (request.Valor != null)
@@ -55,6 +57,10 @@ namespace Renova.Service.Handlers.ContasAPagar
             {
                 query = FiltroHelper.ApplyDecimalFilter(query, request.MetodoPagamentoTaxa, p => p.MetodoPagamento.Taxa);
             }
+            if (request.ClienteId != null)
+            {
+                query = query.Where(p => p.Movimentacao.ClienteId == request.ClienteId);
+            }
 
             var totalCount = await query.CountAsync(cancellationToken);
 
@@ -68,6 +74,7 @@ namespace Renova.Service.Handlers.ContasAPagar
                 "taxa" => ascending ? query.OrderBy(c => c.MetodoPagamento.Taxa) : query.OrderByDescending(c => c.MetodoPagamento.Taxa),
                 "nome" => ascending ? query.OrderBy(c => c.MetodoPagamento.Nome) : query.OrderByDescending(c => c.MetodoPagamento.Nome),
                 "datapagamento" => ascending ? query.OrderBy(c => c.DataPagamento) : query.OrderByDescending(c => c.DataPagamento),
+                "cliente" => ascending ? query.OrderBy(c => c.Movimentacao.Cliente.Apelido) : query.OrderByDescending(c => c.Movimentacao.Cliente.Apelido),
                 "datavencimento" or _ => ascending ? query.OrderBy(c => c.DataVencimento) : query.OrderByDescending(c => c.DataVencimento),
             };
 

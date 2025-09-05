@@ -15,5 +15,6 @@ namespace Renova.Service.Queries.ContasAReceber
         public string? DataPagamento { get; set; }
         public string? MetodoPagamentoNome { get; set; }
         public string? MetodoPagamentoTaxa { get; set; }
+        public Guid? ClienteId { get; set; }
     }
 }

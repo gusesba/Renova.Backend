@@ -48,7 +48,7 @@ namespace Renova.Service.Handlers.Cliente
             cliente = new()
             {
                 LojaId = request.LojaId,
-                Apelido = request.Apelido,
+                Apelido = string.IsNullOrWhiteSpace(request.Apelido) ? request.Nome : request.Apelido,
                 UsuarioId = request.UsuarioId,
                 Referencia = proximaReferencia + 1
             };
